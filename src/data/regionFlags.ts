@@ -16,7 +16,7 @@ export const regions: RegionFlag[] = [
   },
   {
     regionName: "東ヨーロッパ",
-    flags: ["AL", "AM", "AZ", "BY", "BA", "BG", "HR", "CZ", "EE", "GE", "HU", "LV", "LT", "MK", "MD", "ME", "PL", "RO", "RS", "SK", "SI", "UA", "AT"]
+    flags: ["AL", "AM", "AZ", "BY", "BA", "BG", "HR", "CZ", "EE", "GE", "GR", "HU", "LV", "LT", "MK", "MD", "ME", "PL", "RO", "RS", "SK", "SI", "UA", "AT"]
   },
   {
     regionName: "中央ヨーロッパ",
@@ -56,7 +56,7 @@ export const regions: RegionFlag[] = [
   },
   {
     regionName: "中央アメリカ",
-    flags: ["AG", "AI", "AW", "BB", "BL", "VG", "KY", "CU", "CW", "DM", "DO", "SV", "GP", "GD", "GT", "HT", "HN", "JM", "MF", "MQ", "MX", "MS", "NI", "PA", "PR", "KN", "LC", "VC", "SX", "BS", "TC", "TT", "VG", "VI", "BQ", "BZ"]
+    flags: ["AG", "AI", "AW", "BB", "BL", "VG", "KY", "CU", "CW", "DM", "DO", "CR",  "SV", "GP", "GD", "GT", "HT", "HN", "JM", "MF", "MQ", "MX", "MS", "NI", "PA", "PR", "KN", "LC", "VC", "SX", "BS", "TC", "TT", "VG", "VI", "BQ", "BZ"]
   },
   {
     regionName: "南アメリカ",
