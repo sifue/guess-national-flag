@@ -107,6 +107,13 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
                   <p>地域ごとに分類された国旗と国名を一覧表示します。暗記や学習に役立ちます。</p>
                 </div>
               </div>
+              
+              <h3 className="font-bold text-lg mt-6 mb-3">データについて</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                このアプリケーションで使用している国/地域データは、2025/05/22時点の Google Maps がサポートしている国/地域リスト
+                （<a href="https://support.google.com/business/answer/6270107?hl=ja" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google ビジネス プロフィール - サポートされている国/地域</a>）
+                をもとに作成しています。
+              </p>
             </div>
           )}
         </div>
