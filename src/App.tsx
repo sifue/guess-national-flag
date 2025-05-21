@@ -15,7 +15,7 @@ const GameContent: React.FC = () => {
   }, [isGameActive, gameResult, gameMode, questions]);
 
   if (showMemorization) {
-    return <MemorizationMode />;
+    return <MemorizationMode onReturn={() => setShowMemorization(false)} />;
   }
 
   if (gameResult) {

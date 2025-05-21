@@ -3,7 +3,11 @@ import { allFlags } from '../data/allFlags';
 import { groupFlagsByRegion, codeToRegionMap } from '../data/regionFlags';
 import type { Flag } from '../data/flags';
 
-const MemorizationMode: React.FC = () => {
+interface MemorizationModeProps {
+  onReturn?: () => void;
+}
+
+const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
   const [groupedFlags, setGroupedFlags] = useState<Record<string, Flag[]>>({});
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [regionsList, setRegionsList] = useState<string[]>([]);
@@ -39,6 +43,12 @@ const MemorizationMode: React.FC = () => {
     setSelectedRegion(null);
   };
 
+  const handleReturn = () => {
+    if (onReturn) {
+      onReturn();
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -61,7 +71,7 @@ const MemorizationMode: React.FC = () => {
             地域ごとに分類された国旗と国名を暗記できます
           </p>
           <div className="flex justify-center mb-2">
-            <a href="#" onClick={(e) => { e.preventDefault(); window.history.back(); }} className="text-blue-600 hover:text-blue-800">
+            <a href="#" onClick={(e) => { e.preventDefault(); handleReturn(); }} className="text-blue-600 hover:text-blue-800">
               ← トップに戻る
             </a>
           </div>
