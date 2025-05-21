@@ -72,6 +72,9 @@ npx wrangler pages deploy dist --project-name=guess-national-flag
 # カスタムドメインへのデプロイ（main ブランチ）
 npx wrangler pages deploy dist --project-name=guess-national-flag --branch=main
 
+# プロダクション環境への直接デプロイ（メインドメインに反映）
+npx wrangler pages deploy dist --project-name=guess-national-flag --branch=production
+
 # 開発環境などへのデプロイ
 npx wrangler pages deploy dist --project-name=guess-national-flag --branch=dev
 
@@ -111,7 +114,32 @@ npx wrangler pages deploy ./dist --project-name=guess-national-flag
    - デプロイ固有URL: `https://[hash].guess-national-flag.pages.dev`
    - ブランチURL: `https://main.guess-national-flag.pages.dev`
 
-3. wrangler.toml の設定が重要です。正しい設定例：
+### プロダクションURLに更新が反映されない場合
+
+ブランチURL（main.guess-national-flag.pages.dev）には更新が反映されているのに、プロダクションURL（guess-national-flag.pages.dev）に反映されない場合の対処法：
+
+1. **productionブランチに直接デプロイする**（推奨）：
+   ```bash
+   npx wrangler pages deploy dist --project-name=guess-national-flag --branch=production
+   ```
+   このコマンドで直接プロダクション環境にデプロイされ、メインドメイン（guess-national-flag.pages.dev）に反映されます。
+
+2. **手動でプロダクションに昇格させる**：
+   - Cloudflare ダッシュボード（https://dash.cloudflare.com/）にログイン
+   - 「Pages」→「guess-national-flag」プロジェクトを選択
+   - 「Deployments」タブで最新のデプロイを見つけ、「...」メニューから「Promote to production」を選択
+
+3. **キャッシュをクリアする**：
+   - ブラウザの強制リフレッシュ（Ctrl+Shift+R または Ctrl+F5）を試す
+   - プライベートブラウジングウィンドウで開いてみる
+   - Cloudflare ダッシュボードから「Caching」→「Purge Cache」でキャッシュをクリア
+
+3. **時間を置く**：
+   - Cloudflare のキャッシュ更新やDNS伝播には時間がかかる場合があります（最大1時間程度）
+
+### wrangler.tomlの設定
+
+wrangler.toml の正しい設定例：
 ```toml
 name = "guess-national-flag"
 compatibility_date = "2023-11-21"
@@ -120,8 +148,8 @@ compatibility_date = "2023-11-21"
 pages_build_output_dir = "dist"
 ```
 
-4. Cloudflare Dashboardにログインして、ドメイン設定やビルド設定を確認・変更することができます：
-   https://dash.cloudflare.com/ → Pages → guess-national-flag
+Cloudflare Dashboardにログインして、ドメイン設定やビルド設定を確認・変更することができます：
+https://dash.cloudflare.com/ → Pages → guess-national-flag
 
 ## データ一覧
 
