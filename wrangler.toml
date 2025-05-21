@@ -1,0 +1,8 @@
+name = "guess-national-flag"
+compatibility_date = "2023-11-21"
+
+[site]
+bucket = "./dist"
+
+# Pages向けの設定
+pages_build_output_dir = "dist" 
