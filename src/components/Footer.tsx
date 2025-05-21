@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
         <p className="mt-1">
           Open source on{' '}
           <a 
-            href="https://github.com/sifue/sifue-guess-national-flag" 
+            href="https://github.com/sifue/guess-national-flag" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-blue-600 hover:text-blue-800 underline"
