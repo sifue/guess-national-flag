@@ -4,6 +4,7 @@ import GameModeSelection from './components/GameModeSelection';
 import QuizQuestion from './components/QuizQuestion';
 import ResultScreen from './components/ResultScreen';
 import MemorizationMode from './components/MemorizationMode';
+import Footer from './components/Footer';
 
 const GameContent: React.FC = () => {
   const { isGameActive, gameResult, gameMode, questions } = useGameContext();
@@ -35,7 +36,12 @@ const App: React.FC = () => {
 
   return (
     <GameProvider>
-      <GameContent />
+      <div className="flex flex-col min-h-screen">
+        <div className="flex-grow">
+          <GameContent />
+        </div>
+        <Footer />
+      </div>
     </GameProvider>
   );
 };

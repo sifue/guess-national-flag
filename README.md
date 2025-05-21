@@ -63,9 +63,65 @@ npm run build
 # ビルド
 npm run build
 
-# Cloudflare Pagesへのデプロイ
+# Cloudflare Pagesへのデプロイ（基本コマンド）
 npx wrangler pages deploy dist
+
+# 特定のプロジェクト名でデプロイする場合
+npx wrangler pages deploy dist --project-name=guess-national-flag
+
+# カスタムドメインへのデプロイ（main ブランチ）
+npx wrangler pages deploy dist --project-name=guess-national-flag --branch=main
+
+# 開発環境などへのデプロイ
+npx wrangler pages deploy dist --project-name=guess-national-flag --branch=dev
+
+# Windows環境でのデプロイ（パスの問題を解決）
+npx wrangler pages deploy ./dist
+# または
+npx wrangler pages deploy "%CD%\dist"
 ```
+
+### Windowsでのデプロイ時の注意点
+
+Windows環境で `ENOENT: no such file or directory, scandir 'C:\dist'` のようなエラーが発生する場合は、以下の方法を試してください：
+
+1. 相対パスの前にドットを追加する: `npx wrangler pages deploy ./dist`
+2. フルパスを使用する: `npx wrangler pages deploy "%CD%\dist"`
+3. PowerShellを使用している場合: `npx wrangler pages deploy "$PWD\dist"`
+
+### 初回デプロイ時の手順
+
+初めてデプロイを実行する場合、以下のように対話形式でプロジェクト設定を行います：
+
+1. `npx wrangler pages deploy ./dist` を実行
+2. 「新しいプロジェクトを作成するか、既存のプロジェクトを使用するか」と聞かれたら、新規の場合は `Create a new project` を選択
+3. プロジェクト名を入力（例：`guess-national-flag`）
+4. デプロイが完了すると、公開URLが表示されます
+
+次回以降のデプロイでは、プロジェクト名を指定することでこの対話をスキップできます：
+```bash
+npx wrangler pages deploy ./dist --project-name=guess-national-flag
+```
+
+### デプロイ時の注意点
+
+1. 初回デプロイ後、メインURL（https://guess-national-flag.pages.dev/）に反映されるまで数分かかる場合があります。
+2. デプロイ後は以下のURLで確認できます：
+   - プロダクションURL: `https://guess-national-flag.pages.dev/`
+   - デプロイ固有URL: `https://[hash].guess-national-flag.pages.dev`
+   - ブランチURL: `https://main.guess-national-flag.pages.dev`
+
+3. wrangler.toml の設定が重要です。正しい設定例：
+```toml
+name = "guess-national-flag"
+compatibility_date = "2023-11-21"
+
+# Pages向けの設定
+pages_build_output_dir = "dist"
+```
+
+4. Cloudflare Dashboardにログインして、ドメイン設定やビルド設定を確認・変更することができます：
+   https://dash.cloudflare.com/ → Pages → guess-national-flag
 
 ## データ一覧
 
