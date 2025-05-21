@@ -201,9 +201,22 @@ const ResultScreen: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span>最速クリア:</span>
+                      <span>最高スコア最速タイム:</span>
                       <span className="font-bold">
-                        {formatTime(Math.min(...pastResults.filter(r => r.correctAnswers === r.totalQuestions).map(r => r.timeTaken) || [Infinity]))}
+                        {(() => {
+                          if (pastResults.length === 0) return '記録なし';
+                          
+                          // 最高スコアを取得
+                          const highestScore = Math.max(...pastResults.map(r => r.correctAnswers));
+                          
+                          // 最高スコアの記録を抽出
+                          const bestScores = pastResults.filter(r => r.correctAnswers === highestScore);
+                          
+                          // その中で最速のタイムを取得
+                          const fastestTime = Math.min(...bestScores.map(r => r.timeTaken));
+                          
+                          return isFinite(fastestTime) ? formatTime(fastestTime) : '記録なし';
+                        })()}
                       </span>
                     </div>
                   </>

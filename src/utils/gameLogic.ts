@@ -57,8 +57,8 @@ export const generateQuestion = (flags: Flag[], excludeFlags: Flag[] = []): Ques
 };
 
 // Generate a set of questions for a game
-export const generateQuestions = (flags: Flag[], count: number): Question[] => {
-  console.log(`Generating ${count} questions from ${flags.length} flags`);
+export const generateQuestions = (flags: Flag[], count: number, isCodeQuiz: boolean = false): Question[] => {
+  console.log(`Generating ${count} questions from ${flags.length} flags, isCodeQuiz: ${isCodeQuiz}`);
   
   if (flags.length < 4) {
     console.error('Not enough flags to generate questions. Need at least 4 flags.');
@@ -98,7 +98,7 @@ export const generateQuestions = (flags: Flag[], count: number): Question[] => {
         }
       }
     } else {
-      // 通常の10問モード - 既存の方法で問題を生成
+      // 10問モード - 既存の方法で問題を生成
       for (let i = 0; i < count; i++) {
         const question = generateQuestion(flags, usedFlags);
         questions.push(question);

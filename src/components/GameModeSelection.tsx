@@ -9,7 +9,7 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
   const { startGame } = useGameContext();
   const [showHelp, setShowHelp] = useState(false);
 
-  const handleStartGame = (mode: '10questions' | 'allflags') => {
+  const handleStartGame = (mode: '10questions' | 'allflags' | 'isoquiz') => {
     console.log(`Starting game with mode: ${mode}`);
     startGame(mode);
   };
@@ -22,7 +22,7 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
           <div className="h-1 w-20 bg-blue-500 mx-auto mb-6"></div>
           <p className="text-lg text-gray-600 max-w-md mx-auto">
             地理クイズゲーム「GeoGuessr」のための国旗当てクイズです。
-            表示される国旗から正しい国または地域を選んでください。
+            表示される国旗または国コードから正しい国または地域を選んでください。
           </p>
         </div>
         
@@ -31,8 +31,16 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
             onClick={() => handleStartGame('10questions')}
             className="btn-primary text-lg py-4 relative overflow-hidden group"
           >
-            <span className="relative z-10">10問モード</span>
+            <span className="relative z-10">国旗10問モード</span>
             <div className="absolute inset-0 bg-blue-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+          </button>
+          
+          <button
+            onClick={() => handleStartGame('isoquiz')}
+            className="bg-purple-600 hover:bg-purple-700 text-white text-lg py-4 rounded-lg transition-colors shadow-md relative overflow-hidden group"
+          >
+            <span className="relative z-10">ISOコード10問モード</span>
+            <div className="absolute inset-0 bg-purple-800 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
           </button>
           
           <button
@@ -72,8 +80,8 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
             <div className="mt-4 text-gray-700 bg-gray-50 rounded-lg p-5 border border-gray-200">
               <h3 className="font-bold text-lg mb-3">遊び方</h3>
               <ul className="list-disc pl-5 space-y-2 mb-4">
-                <li>ゲームモードを選択すると、国旗クイズが始まります</li>
-                <li>表示される国旗の国名を、4つの選択肢から選びましょう</li>
+                <li>ゲームモードを選択すると、クイズが始まります</li>
+                <li>表示される国旗または国コードから正しい情報を、4つの選択肢から選びましょう</li>
                 <li>回答するとすぐに正解か不正解かが表示されます</li>
                 <li>全問回答すると結果画面に移動します</li>
                 <li>結果画面では、スコアと所要時間、回答履歴が確認できます</li>
@@ -83,8 +91,12 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
               <h3 className="font-bold text-lg mt-6 mb-3">ゲームモード</h3>
               <div className="space-y-3">
                 <div className="bg-white p-3 rounded-lg border border-gray-200">
-                  <div className="font-semibold text-blue-600">10問モード</div>
-                  <p>ランダムに選ばれた10カ国の国旗が出題されます。短時間で挑戦したい方におすすめです。</p>
+                  <div className="font-semibold text-blue-600">国旗10問モード</div>
+                  <p>ランダムに選ばれた10カ国の国旗が出題されます。国旗から国名を当てるクイズです。</p>
+                </div>
+                <div className="bg-white p-3 rounded-lg border border-gray-200">
+                  <div className="font-semibold text-purple-600">ISOコード10問モード</div>
+                  <p>国や地域のISOコード(インターネットドメイン)から国名を当てるクイズです。選択肢には国旗と国名が表示されます。10問出題されます。</p>
                 </div>
                 <div className="bg-white p-3 rounded-lg border border-gray-200">
                   <div className="font-semibold text-blue-600">全国旗モード</div>

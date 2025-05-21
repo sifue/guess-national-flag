@@ -23,7 +23,7 @@ const combinedFlags = [
   ...additionalFlags6
 ];
 
-type GameMode = '10questions' | 'allflags';
+type GameMode = '10questions' | 'allflags' | 'isoquiz';
 
 interface GameContextType {
   gameMode: GameMode | null;
@@ -102,11 +102,11 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     
     console.log(`Selected ${flagsToUse.length} flags for the game`);
     
-    const questionCount = mode === '10questions' ? 10 : Math.min(flagsToUse.length, 200);
+    const questionCount = mode === 'allflags' ? Math.min(flagsToUse.length, 200) : 10;
     console.log(`Creating ${questionCount} questions`);
     
     try {
-      const generatedQuestions = generateQuestions(flagsToUse, questionCount);
+      const generatedQuestions = generateQuestions(flagsToUse, questionCount, mode === 'isoquiz');
       console.log(`Generated ${generatedQuestions.length} questions successfully`);
       
       setGameMode(mode);

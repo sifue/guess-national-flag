@@ -4,7 +4,7 @@ import { useGameContext } from '../context/GameContext';
 import Timer from './Timer';
 
 const QuizQuestion: React.FC = () => {
-  const { questions, currentQuestionIndex, answerQuestion, goToNextQuestion } = useGameContext();
+  const { questions, currentQuestionIndex, answerQuestion, goToNextQuestion, gameMode } = useGameContext();
   const [selectedAnswer, setSelectedAnswer] = useState<Flag | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -29,6 +29,7 @@ const QuizQuestion: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
   const { correctFlag, options } = currentQuestion;
   const isCorrect = selectedAnswer?.code === correctFlag.code;
+  const isIsoCodeQuiz = gameMode === 'isoquiz';
   
   const handleSelectAnswer = (option: Flag) => {
     if (showAnswer) return;
@@ -54,22 +55,33 @@ const QuizQuestion: React.FC = () => {
         
         {/* 問題部分 */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          {/* 国旗画像 */}
+          {/* 国旗画像または国コード表示 */}
           <div className="flex-1 flex justify-center">
-            <div className="relative p-4 bg-white border-2 border-gray-200 rounded-lg shadow-lg transform transition-transform hover:scale-105">
-              <img 
-                src={correctFlag.imageUrl} 
-                alt="国旗" 
-                className="object-contain max-h-48 md:max-h-60 rounded"
-              />
-              <div className="absolute inset-0 shadow-md pointer-events-none border rounded-lg"></div>
-            </div>
+            {isIsoCodeQuiz ? (
+              <div className="relative p-4 bg-white border-2 border-gray-200 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+                <div className="flex items-center justify-center h-48 md:h-60">
+                  <span className="text-5xl font-bold text-gray-700 font-mono">{correctFlag.code}</span>
+                </div>
+                <div className="absolute inset-0 shadow-md pointer-events-none border rounded-lg"></div>
+              </div>
+            ) : (
+              <div className="relative p-4 bg-white border-2 border-gray-200 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+                <img 
+                  src={correctFlag.imageUrl} 
+                  alt="国旗" 
+                  className="object-contain max-h-48 md:max-h-60 rounded"
+                />
+                <div className="absolute inset-0 shadow-md pointer-events-none border rounded-lg"></div>
+              </div>
+            )}
           </div>
           
           {/* 選択肢部分 */}
           <div className="flex-1">
             <h2 className="text-xl font-bold mb-4 text-gray-800 border-l-4 border-blue-500 pl-3">
-              この国旗はどこの国/地域ですか？
+              {isIsoCodeQuiz 
+                ? 'このISOコード(ドメイン)はどこの国/地域ですか？' 
+                : 'この国旗はどこの国/地域ですか？'}
             </h2>
             
             <div className="grid grid-cols-1 gap-3">
@@ -91,7 +103,14 @@ const QuizQuestion: React.FC = () => {
                   `}
                 >
                   <div className="flex items-center">
-                    <div className="font-mono bg-gray-100 px-2 py-1 rounded text-sm text-gray-600 mr-3">{option.code}</div>
+                    {isIsoCodeQuiz && (
+                      <div className="w-8 h-6 mr-3 overflow-hidden border border-gray-300 rounded">
+                        <img src={option.imageUrl} alt={option.name} className="h-full w-full object-cover" />
+                      </div>
+                    )}
+                    {!isIsoCodeQuiz && (
+                      <div className="font-mono bg-gray-100 px-2 py-1 rounded text-sm text-gray-600 mr-3">{option.code}</div>
+                    )}
                     <div className="font-medium">{option.name}</div>
                   </div>
                 </button>
