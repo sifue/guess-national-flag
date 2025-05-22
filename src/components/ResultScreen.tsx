@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useGameContext } from '../context/GameContext';
 import { getGameResults, clearGameResults } from '../utils/gameLogic';
+import { codeToRegionMap } from '../data/regionFlags';
 
 const ResultScreen: React.FC = () => {
   const { gameResult, resetGame, startGame, gameMode } = useGameContext();
@@ -101,10 +102,12 @@ const ResultScreen: React.FC = () => {
                           <span className="font-mono">{qa.question.correctFlag.code}</span>
                           <span className="mx-1">:</span>
                           <span>{qa.question.correctFlag.name}</span>
+                          <span className="text-xs text-gray-400 ml-1">{codeToRegionMap[qa.question.correctFlag.code] || 'その他'}</span>
                         </div>
                         {!qa.isCorrect && qa.userAnswer && (
                           <div className="text-sm text-red-600">
                             <span>回答: {qa.userAnswer.name}</span>
+                            <span className="text-xs text-red-300 ml-1">{codeToRegionMap[qa.userAnswer.code] || 'その他'}</span>
                           </div>
                         )}
                       </div>

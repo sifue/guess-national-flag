@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Flag } from '../data/flags';
 import { useGameContext } from '../context/GameContext';
 import Timer from './Timer';
+import { codeToRegionMap } from '../data/regionFlags';
 
 const QuizQuestion: React.FC = () => {
   const { questions, currentQuestionIndex, answerQuestion, goToNextQuestion, gameMode } = useGameContext();
@@ -111,7 +112,7 @@ const QuizQuestion: React.FC = () => {
                     {!isIsoCodeQuiz && (
                       <div className="font-mono bg-gray-100 px-2 py-1 rounded text-sm text-gray-600 mr-3">{option.code}</div>
                     )}
-                    <div className="font-medium">{option.name}</div>
+                    <div className="font-medium">{option.name} <span className="text-xs text-gray-400 ml-1">{codeToRegionMap[option.code] || 'その他'}</span></div>
                   </div>
                 </button>
               ))}
@@ -157,7 +158,7 @@ const QuizQuestion: React.FC = () => {
                       <div className="w-10 h-6 mr-3 overflow-hidden border border-gray-300 rounded">
                         <img src={correctFlag.imageUrl} alt={correctFlag.name} className="h-full w-full object-cover" />
                       </div>
-                      <span className="font-medium">{correctFlag.name}</span>
+                      <span className="font-medium">{correctFlag.name} <span className="text-xs text-gray-400 ml-1">{codeToRegionMap[correctFlag.code] || 'その他'}</span></span>
                     </div>
                   </div>
                 )}
