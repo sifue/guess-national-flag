@@ -95,10 +95,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     console.log(`GameContext: Starting game with mode: ${mode}`);
     console.log(`Available flags: regular=${flags.length}, all=${allFlags.length}, combined=${combinedFlags.length}`);
     
-    // 全国旗からの出題が必要なのは'allflags'モードだけでなく'10questions'モードでも必要
-    const flagsToUse = (mode === 'allflags' || mode === '10questions')
-      ? (allFlags.length > flags.length ? allFlags : combinedFlags)
-      : flags;
+    // すべてのモードで全国旗データを使用するように変更
+    const flagsToUse = allFlags.length > flags.length ? allFlags : combinedFlags;
     
     console.log(`Selected ${flagsToUse.length} flags for the game`);
     
