@@ -9,7 +9,7 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
   const { startGame } = useGameContext();
   const [showHelp, setShowHelp] = useState(false);
 
-  const handleStartGame = (mode: '10questions' | 'allflags' | 'isoquiz') => {
+  const handleStartGame = (mode: '10questions' | 'allflags' | 'isoquiz' | 'geoguessr') => {
     console.log(`Starting game with mode: ${mode}`);
     startGame(mode);
   };
@@ -41,6 +41,14 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
           >
             <span className="relative z-10">ISOコード10問モード</span>
             <div className="absolute inset-0 bg-purple-800 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+          </button>
+          
+          <button
+            onClick={() => handleStartGame('geoguessr')}
+            className="bg-orange-600 hover:bg-orange-700 text-white text-lg py-4 rounded-lg transition-colors shadow-md relative overflow-hidden group"
+          >
+            <span className="relative z-10">GeoGuessr対応国10問モード</span>
+            <div className="absolute inset-0 bg-orange-800 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
           </button>
           
           <button
@@ -99,6 +107,10 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
                   <p>国や地域のISOコード(インターネットドメイン)から国名を当てるクイズです。選択肢には国旗と国名が表示されます。10問出題されます。</p>
                 </div>
                 <div className="bg-white p-3 rounded-lg border border-gray-200">
+                  <div className="font-semibold text-orange-600">GeoGuessr対応国10問モード</div>
+                  <p>GeoGuessrでプレイ可能な107カ国の国旗からランダムに10問出題されます。実際にGeoGuessrで遭遇する可能性のある国旗を重点的に学習できます。</p>
+                </div>
+                <div className="bg-white p-3 rounded-lg border border-gray-200">
                   <div className="font-semibold text-blue-600">全国旗モード</div>
                   <p>登録されている全ての国旗（200以上）が出題されます。本格的に国旗マスターを目指す方におすすめです。</p>
                 </div>
@@ -112,6 +124,11 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
               <p className="text-sm text-gray-600 mb-4">
                 このアプリケーションで使用している国/地域データは、2025/05/22時点の Google Maps がサポートしている国/地域リスト
                 （<a href="https://support.google.com/business/answer/6270107?hl=ja" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google ビジネス プロフィール - サポートされている国/地域</a>）
+                をもとに作成しています。
+              </p>
+              <p className="text-sm text-gray-600">
+                GeoGuessr対応国データは、2025年6月20日時点の
+                （<a href="https://www.geometas.com/learn/geoguessr_country_coverage" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Geometas - GeoGuessr Country Coverage</a>）
                 をもとに作成しています。
               </p>
             </div>

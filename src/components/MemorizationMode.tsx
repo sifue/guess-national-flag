@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { allFlags } from '../data/allFlags';
+import { geoguessrFlags, geoguessrFlagsByRegion } from '../data/geoguessrFlags';
 import { groupFlagsByRegion, codeToRegionMap } from '../data/regionFlags';
 import type { Flag } from '../data/flags';
 
@@ -14,24 +15,26 @@ const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showAllFlags, setShowAllFlags] = useState(false);
   const [allFlagsList, setAllFlagsList] = useState<Flag[]>([]);
+  const [showGeoguessrOnly, setShowGeoguessrOnly] = useState(false);
 
   useEffect(() => {
     // データを読み込み、地域ごとにグループ化
-    const grouped = groupFlagsByRegion(allFlags);
+    const grouped = showGeoguessrOnly ? geoguessrFlagsByRegion : groupFlagsByRegion(allFlags);
+    const currentAllFlags = showGeoguessrOnly ? geoguessrFlags : allFlags;
     
     // 地域のリストを取得し、フラグが存在する地域のみを保持
     const regions = Object.keys(grouped).filter(region => grouped[region].length > 0);
     
     setGroupedFlags(grouped);
     setRegionsList(regions);
-    setAllFlagsList(allFlags);
+    setAllFlagsList(currentAllFlags);
     setIsLoading(false);
     
     // 最初の地域を選択
     if (regions.length > 0) {
       setSelectedRegion(regions[0]);
     }
-  }, []);
+  }, [showGeoguessrOnly]);
 
   const handleRegionChange = (region: string) => {
     setSelectedRegion(region);
@@ -40,6 +43,12 @@ const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
 
   const handleShowAllFlags = () => {
     setShowAllFlags(true);
+    setSelectedRegion(null);
+  };
+
+  const toggleGeoguessrFilter = () => {
+    setShowGeoguessrOnly(!showGeoguessrOnly);
+    setShowAllFlags(false);
     setSelectedRegion(null);
   };
 
@@ -70,16 +79,29 @@ const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
           <p className="text-center text-gray-600 mb-4">
             地域ごとに分類された国旗と国名を暗記できます
           </p>
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center items-center gap-6 mb-4">
             <a href="#" onClick={(e) => { e.preventDefault(); handleReturn(); }} className="text-blue-600 hover:text-blue-800">
               ← トップに戻る
             </a>
+            <button
+              onClick={toggleGeoguessrFilter}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                showGeoguessrOnly
+                  ? 'bg-orange-600 text-white hover:bg-orange-700'
+                  : 'bg-orange-200 text-orange-700 hover:bg-orange-300'
+              }`}
+            >
+              {showGeoguessrOnly ? 'GeoGuessr対応国のみ表示中' : 'GeoGuessr対応国のみ表示'}
+            </button>
           </div>
         </header>
 
         <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
           <div className="p-4 bg-gray-50 border-b">
             <h2 className="text-xl font-semibold text-gray-700">地域を選択</h2>
+            {showGeoguessrOnly && (
+              <p className="text-sm text-orange-600 mt-1">GeoGuessr対応国のみ表示中（107カ国）</p>
+            )}
           </div>
           <div className="p-4 overflow-x-auto">
             <div className="flex flex-wrap gap-2 mb-3">
@@ -113,9 +135,12 @@ const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
         {showAllFlags && (
           <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <div className="p-4 bg-gray-50 border-b">
-              <h2 className="text-xl font-semibold text-gray-700">すべての国旗一覧</h2>
+              <h2 className="text-xl font-semibold text-gray-700">
+                {showGeoguessrOnly ? 'GeoGuessr対応国一覧' : 'すべての国旗一覧'}
+              </h2>
               <p className="text-sm text-gray-500 mt-1">
                 {allFlagsList.length}カ国/地域
+                {showGeoguessrOnly && <span className="text-orange-600 ml-2">（GeoGuessr対応国のみ）</span>}
               </p>
             </div>
             <div className="p-4">

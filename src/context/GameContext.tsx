@@ -5,6 +5,7 @@ import type { Question, GameResult } from '../utils/gameLogic';
 import { generateQuestions, saveGameResult } from '../utils/gameLogic';
 import { flags } from '../data/flags';
 import { allFlags } from '../data/allFlags';
+import { geoguessrFlags } from '../data/geoguessrFlags';
 import { additionalFlags1 } from '../data/additionalFlags1';
 import { additionalFlags2 } from '../data/additionalFlags2';
 import { additionalFlags3 } from '../data/additionalFlags3';
@@ -23,7 +24,7 @@ const combinedFlags = [
   ...additionalFlags6
 ];
 
-type GameMode = '10questions' | 'allflags' | 'isoquiz';
+type GameMode = '10questions' | 'allflags' | 'isoquiz' | 'geoguessr';
 
 interface GameContextType {
   gameMode: GameMode | null;
@@ -83,20 +84,27 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   // コンポーネントマウント時に国旗データをログ出力
   useEffect(() => {
     console.log('GameContext initialized');
-    console.log(`Flags count: regular=${flags.length}, all=${allFlags.length}, combined=${combinedFlags.length}`);
+    console.log(`Flags count: regular=${flags.length}, all=${allFlags.length}, geoguessr=${geoguessrFlags.length}, combined=${combinedFlags.length}`);
     
     // 最初の数個の国旗をサンプルとして出力
     console.log('Sample flags from regular flags:', flags.slice(0, 3));
     console.log('Sample flags from allFlags:', allFlags.slice(0, 3));
+    console.log('Sample flags from geoguessrFlags:', geoguessrFlags.slice(0, 3));
     console.log('Sample flags from combinedFlags:', combinedFlags.slice(0, 3));
   }, []);
 
   const startGame = (mode: GameMode) => {
     console.log(`GameContext: Starting game with mode: ${mode}`);
-    console.log(`Available flags: regular=${flags.length}, all=${allFlags.length}, combined=${combinedFlags.length}`);
+    console.log(`Available flags: regular=${flags.length}, all=${allFlags.length}, geoguessr=${geoguessrFlags.length}, combined=${combinedFlags.length}`);
     
-    // すべてのモードで全国旗データを使用するように変更
-    const flagsToUse = allFlags.length > flags.length ? allFlags : combinedFlags;
+    // モードに応じて使用する国旗データを選択
+    let flagsToUse;
+    if (mode === 'geoguessr') {
+      flagsToUse = geoguessrFlags;
+    } else {
+      // すべてのモードで全国旗データを使用するように変更
+      flagsToUse = allFlags.length > flags.length ? allFlags : combinedFlags;
+    }
     
     console.log(`Selected ${flagsToUse.length} flags for the game`);
     
