@@ -100,7 +100,7 @@ const MemorizationMode: React.FC<MemorizationModeProps> = ({ onReturn }) => {
           <div className="p-4 bg-gray-50 border-b">
             <h2 className="text-xl font-semibold text-gray-700">地域を選択</h2>
             {showGeoguessrOnly && (
-              <p className="text-sm text-orange-600 mt-1">GeoGuessr対応国のみ表示中（107カ国）</p>
+              <p className="text-sm text-orange-600 mt-1">GeoGuessr対応国のみ表示中（131カ国）</p>
             )}
           </div>
           <div className="p-4 overflow-x-auto">

@@ -108,7 +108,7 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
                 </div>
                 <div className="bg-white p-3 rounded-lg border border-gray-200">
                   <div className="font-semibold text-orange-600">GeoGuessr対応国10問モード</div>
-                  <p>GeoGuessrでプレイ可能な107カ国の国旗からランダムに10問出題されます。実際にGeoGuessrで遭遇する可能性のある国旗を重点的に学習できます。</p>
+                  <p>GeoGuessrでプレイ可能な131カ国の国旗からランダムに10問出題されます。実際にGeoGuessrで遭遇する可能性のある国旗を重点的に学習できます。（2025/07/06更新：Plonk Itガイドに完全一致）</p>
                 </div>
                 <div className="bg-white p-3 rounded-lg border border-gray-200">
                   <div className="font-semibold text-blue-600">全国旗モード</div>
@@ -127,8 +127,8 @@ const GameModeSelection: React.FC<GameModeSelectionProps> = ({ onMemorizationMod
                 をもとに作成しています。
               </p>
               <p className="text-sm text-gray-600">
-                GeoGuessr対応国データは、2025年6月20日時点の
-                （<a href="https://www.geometas.com/learn/geoguessr_country_coverage" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Geometas - GeoGuessr Country Coverage</a>）
+                GeoGuessr対応国データは、2025年7月6日時点の
+                （<a href="https://www.plonkit.net/guide" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Plonk It - GeoGuessr Guide</a>）
                 をもとに作成しています。
               </p>
             </div>
